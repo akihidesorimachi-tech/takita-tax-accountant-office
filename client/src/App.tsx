@@ -1,11 +1,14 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Router as WouterRouter, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 
+// GitHub Pagesのプロジェクトページ配下 (例: /takita-tax-accountant-office/) にデプロイされるため、
+// Viteのbase設定と揃えてルーティングの基準パスをずらす。
+const routerBase = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 function Router() {
   return (
@@ -32,7 +35,9 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <WouterRouter base={routerBase}>
+            <Router />
+          </WouterRouter>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

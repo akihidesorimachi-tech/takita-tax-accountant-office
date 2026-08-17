@@ -2,18 +2,21 @@
 
 このパッケージには、現在の公開サイトを Claude Code で保守・改修するための **React / Vite ソースコード、全画像アセット、依存関係のロックファイル** を収録しています。Manus の公開用CDNに依存しないよう、画像はすべて `client/public/assets/` に同梱し、アプリケーション内の参照先もローカルパスへ変更済みです。
 
+**公開URL:** https://akihidesorimachi-tech.github.io/takita-tax-accountant-office/
+
 ## 起動方法
 
 Node.js 22 以降と pnpm を用意したうえで、このフォルダを Claude Code で開いてください。ターミナルでは以下を実行します。
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
 開発サーバー起動後、表示されるローカルURLをブラウザで開くと確認できます。公開用ビルドは次のコマンドです。
 
 ```bash
+pnpm check
 pnpm build
 pnpm start
 ```
@@ -28,6 +31,7 @@ pnpm start
 | `client/public/assets/` | ヒーロー、サービス、瀧田先生本人の写真 |
 | `client/index.html` | ページタイトル、フォント読み込み、メタ情報 |
 | `package.json` / `pnpm-lock.yaml` | 依存パッケージと固定バージョン |
+| `.github/workflows/deploy.yml` | GitHub Pages への自動デプロイ |
 
 ## 画像アセット
 
@@ -52,6 +56,8 @@ pnpm start
 
 > スマホ表示を修正する場合は、デスクトップ表示を変更しないこと。最初に現在のDOM構造を確認し、変更範囲を最小限にしてください。
 
-## 公開について
+## 公開(GitHub Pages)
 
-この移管パッケージは一般的なViteプロジェクトとして構成されています。Cloudflare Pages、Vercel、Netlify、レンタルサーバー等への公開先に応じて設定してください。Manus 上の現行公開サイトは、本パッケージの動作確認後に別途切り替えてください。
+`main` ブランチへの push で `.github/workflows/deploy.yml` が自動的に `pnpm build` を実行し、GitHub Pages（プロジェクトページ `/takita-tax-accountant-office/` 配下）に公開します。ベースパスは `VITE_BASE_PATH` 環境変数(`vite.config.ts`)で切り替えており、画像パスやルーティングも `import.meta.env.BASE_URL` を基準に組み立てています。初回のみ、リポジトリの Settings → Pages → Build and deployment → Source を「GitHub Actions」に設定してください。
+
+Cloudflare Pages、Vercel、Netlify、レンタルサーバー等への公開も、一般的なViteプロジェクトとして構成されているため可能です。Manus 上の現行公開サイトは、本パッケージの動作確認後に別途切り替えてください。

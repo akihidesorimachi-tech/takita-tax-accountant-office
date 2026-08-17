@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-// Claude Code 移管版: 画像は client/public/assets/ に同梱。
+// Claude Code 移管版: 画像は client/public/assets/ に同梱。GitHub Pagesのサブパス配信に対応するためBASE_URLを付与。
 const IMAGES = {
-  heroBg: "/assets/hero-bg.jpg",
-  portrait: "/assets/takita-portrait.webp",
-  serviceInheritance: "/assets/service-inheritance.jpg",
-  serviceDoctor: "/assets/service-doctor.jpg",
-  serviceTax: "/assets/service-tax.jpg",
+  heroBg: `${import.meta.env.BASE_URL}assets/hero-bg.jpg`,
+  portrait: `${import.meta.env.BASE_URL}assets/takita-portrait.webp`,
+  serviceInheritance: `${import.meta.env.BASE_URL}assets/service-inheritance.jpg`,
+  serviceDoctor: `${import.meta.env.BASE_URL}assets/service-doctor.jpg`,
+  serviceTax: `${import.meta.env.BASE_URL}assets/service-tax.jpg`,
 };
 
 // ===== Scroll animation hook =====
@@ -217,7 +217,7 @@ function ServicesSection() {
       ),
       title: "法人税務顧問",
       desc: "日常の税務相談から会計体制の整備まで、継続的な業務効率化を支援します。経営判断に役立つ財務情報の提供も行い、法人の健全な成長をサポートします。",
-      img: "/assets/service-corporate.jpg",
+      img: `${import.meta.env.BASE_URL}assets/service-corporate.jpg`,
     },
     {
       icon: (

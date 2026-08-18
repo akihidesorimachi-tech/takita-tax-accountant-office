@@ -14,3 +14,14 @@
 ## 変更の進め方
 
 まず影響範囲を短く説明し、対象ファイルを最小限に絞って編集してください。レスポンシブ表示の変更では、モバイル用・デスクトップ用の要素順やCSSクラスを確認し、片方の表示を壊さないようにしてください。完了時には、変更ファイル、表示への影響、`pnpm build` の結果を簡潔に報告してください。
+
+## GitHub Pages公開時の注意(default branch)
+
+このリポジトリは元々コミットが一つもない空リポジトリでした。空リポジトリに対して `main` 以外のブランチ(例: `claude/...`)へ最初に push すると、GitHub はそのブランチを**default branch**として採用してしまいます。その後 `main` に push しても default branch は自動では戻りません。
+
+`.github/workflows/deploy.yml` による GitHub Pages 公開は、初回デプロイ時に自動作成される `github-pages` 環境の「Deployment branches and tags」設定が、その時点の **default branch** を基準に決まります。default branch が `main` でないと、`main` へのデプロイが拒否され(ワークフローの `deploy` ジョブが即座に失敗し)ます。
+
+そのため、空リポジトリへの初回復元・公開作業では、`main` へ push した後に次を確認してください。
+
+1. リポジトリの Settings → General → Default branch が `main` になっているか確認し、違えば `main` に変更する
+2. (すでに `github-pages` 環境が作成されている場合)Settings → Environments → `github-pages` → Deployment branches and tags が `main` を許可しているか確認する
